@@ -13,7 +13,7 @@ export function Project() {
       </div>
 
       <div className="flex flex-col mt-6">
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full">
           <span className="text-gray-800 text-xs">#ReactJS</span>
           <span className="text-gray-800 text-xs">#Typescript</span>
           <span className="text-gray-800 text-xs">#Responsivo</span>

@@ -14,7 +14,7 @@ export function Header() {
 
       <div className="flex flex-col gap-4 mt-5">
         <div className="flex flex-col">
-          <strong className="text-gray-800 text-2xl">Gabriel Garcez</strong>
+          <h1 className="text-gray-800 text-2xl">Gabriel Garcez</h1>
           <span className="text-gray-700 text-lg">Fullstack developer</span>
         </div>
 

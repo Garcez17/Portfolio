@@ -9,7 +9,7 @@ const Home: NextPage = () => {
     <div className="container p-4 flex flex-col items-center gap-6">
       <Header />
 
-      <div className="flex flex-col-reverse w-full">
+      <div className="flex flex-col-reverse w-full gap-16">
         <Experiences />
         <ProjectList />
       </div>
