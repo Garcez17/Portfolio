@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String   @id @default(uuid())
+  name            String
+  avatar_url      String
+  email           String
+  phone_number    String
+  github_username String
+  title           String
+  about           String
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Tag {
+  id          String       @id @default(uuid())
+  name        String
+  description String
+  projects    ProjectTag[]
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+
+  @@map("tags")
+}
+
+model Project {
+  id             String       @id @default(uuid())
+  title          String
+  description    String
+  image_url      String
+  demo_url       String
+  repository_url String
+  tags           ProjectTag[]
+  created_at     DateTime     @default(now())
+  updated_at     DateTime     @updatedAt
+
+  @@map("projects")
+}
+
+model ProjectTag {
+  id             String   @id @default(uuid())
+  title          String
+  description    String
+  image_url      String
+  demo_url       String
+  repository_url String
+  tag            Tag?     @relation(fields: [tag_id], references: [id])
+  tag_id         String?
+  project        Project? @relation(fields: [project_id], references: [id])
+  project_id     String?
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  @@map("project_tags")
+}
+
+model Experience {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  start       String
+  end         String?
+  image_url   String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@map("experiences")
+}

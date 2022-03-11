@@ -27,7 +27,7 @@ export function Project() {
 
         <div className="mt-10 flex gap-2">
           <a href="#" className="bg-blue-500 h-12 w-36 flex items-center justify-center rounded-lg text-white hover:bg-blue-600 transition-colors">Demo</a>
-          <button className="bg-transparent h-12 w-28 flex items-center justify-center border-2 border-blue-500 rounded-lg text-blue-500 hover:border-blue-600 hover:text-blue-600 transition-colors">Ver mais</button>
+          <button className="bg-transparent h-12 w-28 flex items-center justify-center border-2 border-blue-500 rounded-lg text-blue-500 hover:border-blue-600 hover:text-blue-600 transition-colors">Código</button>
         </div>
       </div>
     </div>
