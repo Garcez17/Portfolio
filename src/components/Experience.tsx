@@ -1,16 +1,21 @@
 import Image from "next/image";
+import { Experience } from "@prisma/client";
 
-export function Experience() {
+type ExperienceProps = {
+  experience: Experience;
+}
+
+export function Experience({ experience }: ExperienceProps) {
   return (
     <div className="flex gap-4">
-      <div className="w-16 h-16 relative">
-        <Image src="https://avatars.githubusercontent.com/u/60040026?v=4" alt="company-image" layout="fill" className="rounded-full" />
+      <div className="relative w-16 h-16">
+        <Image src={experience.image_url} alt={experience.title} layout="fill" className="rounded-full" />
       </div>
       <div className="flex-1">
-        <span className="text-gray-700 text-sm">Fev 2017 - Atualmente</span>
-        <h3 className="text-gray-900 mt-2">Fullstack developer</h3>
+        <span className="text-sm text-gray-700">{experience.start} - {experience.end}</span>
+        <h3 className="mt-2 text-gray-900">{experience.title}</h3>
 
-        <p className="text-gray-700 mt-4">Donec aliquam est dui, vel vestibulum diam sollicitudin id. Quisque feugiat malesuada molestie.</p>
+        <p className="mt-4 text-gray-700">{experience.description}</p>
       </div>
     </div>
   )

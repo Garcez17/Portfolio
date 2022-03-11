@@ -1,22 +1,65 @@
-import type { NextPage } from 'next'
+import { GetServerSideProps } from 'next';
+import { Experience, Project, User } from '@prisma/client';
 
-import { Header } from '../components/Header'
-import { ProjectList } from '../components/ProjectList'
-import { Experiences } from '../components/Experiences'
+import { Header } from '../components/Header';
+import { ProjectList } from '../components/ProjectList';
+import { Experiences } from '../components/Experiences';
 
-const Home: NextPage = () => {
+import { prisma } from '../utils/prisma';
+
+type HomeProps = {
+  user: User;
+  experiences: Experience[];
+  projects: Project[];
+}
+
+export default function Home({ user, experiences, projects }: HomeProps) {
   return (
-    <div className="w-full h-full flex justify-center">
-      <div className="container p-4 flex flex-col items-center gap-6">
-        <Header />
+    <div className="flex justify-center w-full h-full">
+      <div className="container flex flex-col items-center gap-6 p-4">
+        <Header user={user} />
 
         <div className="flex flex-col-reverse w-full gap-16 md:flex-row md:gap-4">
-          <Experiences />
-          <ProjectList />
+          <Experiences experiences={experiences} />
+          <ProjectList projects={projects} />
         </div>
       </div>
     </div>
   )
 }
 
-export default Home
+export const getServerSideProps: GetServerSideProps = async () => {
+  const user = (await prisma.user.findFirst())!;
+  const experiences = await prisma.experience.findMany();
+  const projects = await prisma.project.findMany();
+
+  const serializedUser = {
+    ...user,
+    created_at: user.created_at.toISOString(),
+    updated_at: user.updated_at.toISOString(),
+  }
+
+  const serializedExperiences = experiences.map(experience => {
+    return {
+      ...experience,
+      created_at: experience.created_at.toISOString(),
+      updated_at: experience.updated_at.toISOString(),
+    }
+  });
+
+  const serializedProjects = projects.map(project => {
+    return {
+      ...project,
+      created_at: project.created_at.toISOString(),
+      updated_at: project.updated_at.toISOString(),
+    }
+  })
+
+  return {
+    props: {
+      user: serializedUser,
+      experiences: serializedExperiences,
+      projects: serializedProjects,
+    }
+  }
+}

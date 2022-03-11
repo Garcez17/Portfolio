@@ -1,16 +1,25 @@
+import { Project as ProjectType } from "@prisma/client";
 import { Project } from "./Project";
 
-export function ProjectList() {
+type ProjectListProps = {
+  projects: ProjectType[];
+}
+
+export function ProjectList({ projects }: ProjectListProps) {
   return (
     <div className="flex-1">
-      <div className="bg-white p-4 rounded-xl">
-        <span className="text-gray-800 text-lg">Projetos (3)</span>
+      <div className="p-4 bg-white rounded-xl">
+        <span className="text-lg text-gray-800">Projetos ({projects.length})</span>
       </div>
 
-      <div className="mt-4 flex flex-col gap-9">
-        <Project />
-        <Project />
-        <Project />
+      <div className="flex flex-col mt-4 gap-9">
+        {projects.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-64 p-4 bg-white shadow-lg rounded-xl sm:flex-row sm:gap-4">
+            <span className="text-sm text-gray-700">Sem projetos cadastrados</span>
+          </div>
+        ) : (
+          projects.map(project => <Project key={project.id} project={project} />)
+        )}
       </div>
     </div>
   )

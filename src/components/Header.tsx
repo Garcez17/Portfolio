@@ -1,13 +1,19 @@
 import Image from "next/image";
+import { User } from "@prisma/client";
+import { FiGithub, FiMail, FiPhone } from 'react-icons/fi';
 
-export function Header() {
+type HeaderProps = {
+  user: User;
+}
+
+export function Header({ user }: HeaderProps) {
   return (
-    <header className="w-full p-4 bg-white rounded-xl shadow-lg flex flex-col sm:flex-row sm:gap-4 md:h-72">
-      <div className="h-64 w-full relative sm:h-full sm:w-72">
+    <header className="flex flex-col w-full p-4 bg-white shadow-lg rounded-xl sm:flex-row sm:gap-4 md:h-72">
+      <div className="relative w-full h-64 sm:h-full sm:w-72">
         <Image
-          src="https://avatars.githubusercontent.com/u/60040026?v=4"
+          src={user.avatar_url}
           layout="fill"
-          alt="profile-pic"
+          alt={user.name}
           className="rounded-xl"
         />
       </div>
@@ -15,18 +21,28 @@ export function Header() {
       <div className="flex flex-col flex-1 gap-4 mt-5 sm:mt-0">
         <div className="flex flex-col gap-4 md:flex-row md:justify-between">
           <div className="flex flex-col">
-            <h1 className="text-gray-800 text-2xl">Gabriel Garcez</h1>
-            <span className="text-gray-700 text-lg">Fullstack developer</span>
+            <h1 className="text-2xl text-gray-800">{user.name}</h1>
+            <span className="text-lg text-gray-700">{user.title}</span>
           </div>
 
           <div className="flex flex-col gap-2.5">
-            <span className="text-gray-800 text-base">ggarcez613@gmail.com</span>
-            <span className="text-gray-800 text-base">(71) 9 8191-3913</span>
+            <a href="#" className="flex items-center gap-2 text-base text-gray-800">
+              <FiMail />
+              {user.email}
+            </a>
+            <a href="#" className="flex items-center gap-2 text-base text-gray-800">
+              <FiPhone />
+              {user.phone_number}
+            </a>
+            <a href="#" className="flex items-center gap-2 text-base text-gray-800">
+              <FiGithub />
+              {user.github_username}
+            </a>
           </div>
         </div>
 
-        <p className="text-gray-700 text-lg">
-          Desenvolvedor Fullstack React, NodeJS e Typescript.
+        <p className="text-lg text-gray-700">
+          {user.about}
         </p>
       </div>
     </header>

@@ -1,33 +1,38 @@
+import { Project } from "@prisma/client";
 import Image from "next/image";
 
-export function Project() {
+type ProjectProps = {
+  project: Project;
+}
+
+export function Project({ project }: ProjectProps) {
   return (
-    <div className="p-4 bg-white rounded-xl shadow-lg flex flex-col sm:flex-row sm:gap-4">
-      <div className="h-48 w-full relative sm:flex-1 sm:h-auto">
+    <div className="flex flex-col p-4 bg-white shadow-lg rounded-xl sm:flex-row sm:gap-4">
+      <div className="relative w-full h-48 sm:flex-1 sm:h-auto">
         <Image
-          src="https://avatars.githubusercontent.com/u/60040026?v=4"
+          src={project.image_url}
           layout="fill"
-          alt="profile-pic"
+          alt={project.title}
           className="rounded-xl"
         />
       </div>
 
       <div className="flex flex-col mt-6 sm:w-3/5 sm:mt-0">
-        <div className="grid grid-flow-col auto-cols-max gap-2">
-          <span className="text-gray-800 text-xs">#ReactJS</span>
-          <span className="text-gray-800 text-xs">#Typescript</span>
-          <span className="text-gray-800 text-xs">#Responsivo</span>
-          <span className="text-gray-800 text-xs">#Redux</span>
+        <div className="grid grid-flow-col gap-2 auto-cols-max">
+          <span className="text-xs text-gray-800">#ReactJS</span>
+          <span className="text-xs text-gray-800">#Typescript</span>
+          <span className="text-xs text-gray-800">#Responsivo</span>
+          <span className="text-xs text-gray-800">#Redux</span>
         </div>
 
         <div className="mt-6">
-          <strong className="text-gray-900 text-2xl">Phonebook</strong>
-          <p className="text-gray-700">In this project, I work with HTML and CSS to create a responsive page. This page is similiar with instagram profile page. The design is from devchallenge.io</p>
+          <strong className="text-2xl text-gray-900">{project.title}</strong>
+          <p className="text-gray-700">{project.description}</p>
         </div>
 
-        <div className="mt-10 flex gap-2">
-          <a href="#" className="bg-blue-500 h-12 w-36 flex items-center justify-center rounded-lg text-white hover:bg-blue-600 transition-colors">Demo</a>
-          <button className="bg-transparent h-12 w-28 flex items-center justify-center border-2 border-blue-500 rounded-lg text-blue-500 hover:border-blue-600 hover:text-blue-600 transition-colors">Código</button>
+        <div className="flex gap-2 mt-10">
+          <a href={project.demo_url} className="flex items-center justify-center h-12 text-white transition-colors bg-blue-500 rounded-lg w-36 hover:bg-blue-600">Demo</a>
+          <a href={project.repository_url} className="flex items-center justify-center h-12 text-blue-500 transition-colors bg-transparent border-2 border-blue-500 rounded-lg w-28 hover:border-blue-600 hover:text-blue-600">Código</a>
         </div>
       </div>
     </div>
