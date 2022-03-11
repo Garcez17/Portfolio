@@ -2,8 +2,8 @@ import Image from "next/image";
 
 export function Project() {
   return (
-    <div className="p-4 bg-white rounded-xl shadow-lg flex flex-col">
-      <div className="h-48 w-full relative">
+    <div className="p-4 bg-white rounded-xl shadow-lg flex flex-col sm:flex-row sm:gap-4">
+      <div className="h-48 w-full relative sm:flex-1 sm:h-auto">
         <Image
           src="https://avatars.githubusercontent.com/u/60040026?v=4"
           layout="fill"
@@ -12,8 +12,8 @@ export function Project() {
         />
       </div>
 
-      <div className="flex flex-col mt-6">
-        <div className="flex gap-2 w-full">
+      <div className="flex flex-col mt-6 sm:w-3/5 sm:mt-0">
+        <div className="grid grid-flow-col auto-cols-max gap-2">
           <span className="text-gray-800 text-xs">#ReactJS</span>
           <span className="text-gray-800 text-xs">#Typescript</span>
           <span className="text-gray-800 text-xs">#Responsivo</span>
