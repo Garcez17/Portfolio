@@ -40,9 +40,10 @@ model Project {
   id             String       @id @default(uuid())
   title          String
   description    String
-  image_url      String
-  demo_url       String
-  repository_url String
+  image_url      String?
+  demo_url       String?
+  repository_url String?
+  state          String
   tags           ProjectTag[]
   created_at     DateTime     @default(now())
   updated_at     DateTime     @updatedAt

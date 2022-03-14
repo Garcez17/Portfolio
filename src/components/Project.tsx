@@ -18,7 +18,7 @@ export function Project({ project }: ProjectProps) {
       </div>
 
       <div className="flex flex-col mt-6 sm:w-3/5 sm:mt-0">
-        <div className="grid grid-flow-col gap-2 auto-cols-max">
+        <div className="flex flex-wrap gap-2">
           <span className="text-xs text-gray-800">#ReactJS</span>
           <span className="text-xs text-gray-800">#Typescript</span>
           <span className="text-xs text-gray-800">#Responsivo</span>
