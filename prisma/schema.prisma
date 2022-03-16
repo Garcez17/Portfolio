@@ -26,12 +26,11 @@ model User {
 }
 
 model Tag {
-  id          String       @id @default(uuid())
-  name        String
-  description String
-  projects    ProjectTag[]
-  created_at  DateTime     @default(now())
-  updated_at  DateTime     @updatedAt
+  id         String       @id @default(uuid())
+  name       String
+  projects   ProjectTag[]
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
 
   @@map("tags")
 }
@@ -40,7 +39,7 @@ model Project {
   id             String       @id @default(uuid())
   title          String
   description    String
-  image_url      String?
+  image_url      String
   demo_url       String?
   repository_url String?
   state          String

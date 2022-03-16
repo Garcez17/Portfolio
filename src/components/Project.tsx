@@ -31,8 +31,8 @@ export function Project({ project }: ProjectProps) {
         </div>
 
         <div className="flex gap-2 mt-10">
-          <a href={project.demo_url} className="flex items-center justify-center h-12 text-white transition-colors bg-blue-500 rounded-lg w-36 hover:bg-blue-600">Demo</a>
-          <a href={project.repository_url} className="flex items-center justify-center h-12 text-blue-500 transition-colors bg-transparent border-2 border-blue-500 rounded-lg w-28 hover:border-blue-600 hover:text-blue-600">Código</a>
+          {project.demo_url && <a href={project.demo_url} className="flex items-center justify-center h-12 text-white transition-colors bg-blue-500 rounded-lg w-36 hover:bg-blue-600">Demo</a>}
+          {project.repository_url && <a href={project.repository_url} className="flex items-center justify-center h-12 text-blue-500 transition-colors bg-transparent border-2 border-blue-500 rounded-lg w-28 hover:border-blue-600 hover:text-blue-600">Código</a>}
         </div>
       </div>
     </div>
