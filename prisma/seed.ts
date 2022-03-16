@@ -10,7 +10,7 @@ async function main() {
       github_username: 'Garcez17',
       phone_number: '(71) 9 8191-3913',
       title: 'Fullstack developer',
-      avatar_url: '',
+      avatar: 'https://avatars.githubusercontent.com/u/60040026?v=4',
     }
   })
 }

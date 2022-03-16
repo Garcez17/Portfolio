@@ -1,11 +1,19 @@
-import { Project } from "@prisma/client";
+import { Project, ProjectTag, Tag } from "@prisma/client";
 import Image from "next/image";
 
+type SerializedProject = Project & {
+  image_url: string;
+  tags: (ProjectTag & {
+    tag: Tag;
+  })[];
+}
+
 type ProjectProps = {
-  project: Project;
+  project: SerializedProject;
 }
 
 export function Project({ project }: ProjectProps) {
+  console.log(project);
   return (
     <div className="flex flex-col p-4 bg-white shadow-lg rounded-xl sm:flex-row sm:gap-4">
       <div className="relative w-full h-48 sm:flex-1 sm:h-auto">
@@ -19,10 +27,9 @@ export function Project({ project }: ProjectProps) {
 
       <div className="flex flex-col mt-6 sm:w-3/5 sm:mt-0">
         <div className="flex flex-wrap gap-2">
-          <span className="text-xs text-gray-800">#ReactJS</span>
-          <span className="text-xs text-gray-800">#Typescript</span>
-          <span className="text-xs text-gray-800">#Responsivo</span>
-          <span className="text-xs text-gray-800">#Redux</span>
+          {project.tags.map(({ tag }) => (
+            <span className="text-xs text-gray-800" key={tag.id}>{tag.name}</span>
+          ))}
         </div>
 
         <div className="mt-6">

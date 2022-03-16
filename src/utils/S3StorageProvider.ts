@@ -1,56 +1,40 @@
 import fs from 'fs';
-import path from 'path';
-// import aws, { S3 } from 'aws-sdk';
-import mime from 'mime';
+import aws, { S3 } from 'aws-sdk';
 
-class DiskStorageProvider {
-  // private client: S3;
+class S3StorageProvider {
+  private client: S3;
 
-  // constructor() {
-  //   this.client = new aws.S3({
-  //     region: 'us-east-1',
-  //   });
-  // }
+  constructor() {
+    this.client = new aws.S3({
+      region: 'us-east-1',
+    });
+  }
 
-  public async saveFile(file: string, filePath: string): Promise<string> {
-    const originalPath = path.resolve('123');
+  public async saveFile(file: string, filePath: string, content_type: string): Promise<string> {
+    const fileContent = await fs.promises.readFile(filePath);
 
-    const ContentType = mime.getType(originalPath);
-    const fileContent = await fs.promises.readFile(originalPath);
-    console.log({ fileContent });
-
-    // if (!ContentType) {
-    //   throw new Error('File not found');
-    // }
-
-
-    // console.log(fileContent);
-    // console.lo
-
-    // await this.client
-    //   .putObject({
-    //     Bucket: uploadConfig.config.aws.bucket,
-    //     Key: file,
-    //     ACL: 'public-read',
-    //     Body: fileContent,
-    //     ContentType,
-    //     ContentDisposition: `inline; filename=${file}`,
-    //   })
-    //   .promise();
-
-    // await fs.promises.unlink(originalPath);
+    await this.client
+      .putObject({
+        Bucket: 'app-portfolio-gz',
+        Key: file,
+        ACL: 'public-read',
+        Body: fileContent,
+        ContentType: content_type,
+        ContentDisposition: `inline; filename=${file}`,
+      })
+      .promise();
 
     return file;
   }
 
-  // public async deleteFile(file: string): Promise<void> {
-  //   await this.client
-  //     .deleteObject({
-  //       Bucket: uploadConfig.config.aws.bucket,
-  //       Key: file,
-  //     })
-  //     .promise();
-  // }
+  public async deleteFile(file: string): Promise<void> {
+    await this.client
+      .deleteObject({
+        Bucket: 'app-portfolio-gz',
+        Key: file,
+      })
+      .promise();
+  }
 }
 
-export { DiskStorageProvider };
+export { S3StorageProvider };

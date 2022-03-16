@@ -1,8 +1,15 @@
-import { Project as ProjectType } from "@prisma/client";
+import { Project as ProjectType, ProjectTag, Tag } from "@prisma/client";
 import { Project } from "./Project";
 
+type SerializedProject = ProjectType & {
+  image_url: string;
+  tags: (ProjectTag & {
+    tag: Tag;
+  })[];
+}
+
 type ProjectListProps = {
-  projects: ProjectType[];
+  projects: SerializedProject[];
 }
 
 export function ProjectList({ projects }: ProjectListProps) {

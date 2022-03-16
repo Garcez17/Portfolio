@@ -13,7 +13,7 @@ datasource db {
 model User {
   id              String   @id @default(uuid())
   name            String
-  avatar_url      String
+  avatar          String
   email           String
   phone_number    String
   github_username String
@@ -39,7 +39,7 @@ model Project {
   id             String       @id @default(uuid())
   title          String
   description    String
-  image_url      String
+  image          String
   demo_url       String?
   repository_url String?
   state          String
@@ -51,18 +51,13 @@ model Project {
 }
 
 model ProjectTag {
-  id             String   @id @default(uuid())
-  title          String
-  description    String
-  image_url      String
-  demo_url       String
-  repository_url String
-  tag            Tag?     @relation(fields: [tag_id], references: [id])
-  tag_id         String?
-  project        Project? @relation(fields: [project_id], references: [id])
-  project_id     String?
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
+  id         String   @id @default(uuid())
+  tag        Tag?     @relation(fields: [tag_id], references: [id])
+  tag_id     String?
+  project    Project? @relation(fields: [project_id], references: [id])
+  project_id String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("project_tags")
 }
@@ -73,7 +68,7 @@ model Experience {
   description String
   start       String
   end         String?
-  image_url   String
+  image       String
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
 

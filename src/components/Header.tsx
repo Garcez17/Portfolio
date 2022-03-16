@@ -11,7 +11,7 @@ export function Header({ user }: HeaderProps) {
     <header className="flex flex-col w-full p-4 bg-white shadow-lg rounded-xl sm:flex-row sm:gap-4 md:h-72">
       <div className="relative w-full h-64 sm:h-full sm:w-72">
         <Image
-          src={user.avatar_url}
+          src={user.avatar}
           layout="fill"
           alt={user.name}
           className="rounded-xl"

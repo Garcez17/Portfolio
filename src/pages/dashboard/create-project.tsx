@@ -1,3 +1,5 @@
+import { GetServerSideProps } from 'next';
+import { Tag } from '@prisma/client';
 import { Autocomplete, TextField } from '@mui/material';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -9,6 +11,12 @@ import * as yup from "yup";
 import { DashForm } from "../../components/dashboard/DashForm";
 import { DashboardHeader } from "../../components/dashboard/Header";
 import { api } from '../../services/api';
+import { prisma } from '../../utils/prisma';
+import { useRouter } from 'next/router';
+
+type CreateProjectProps = {
+  tags: Tag[];
+}
 
 type FormInputData = {
   image: FileList;
@@ -19,8 +27,9 @@ type FormInputData = {
   state: 'unstarted' | 'development' | 'completed';
 }
 
-export default function CreateProject() {
-  const [tags, setTags] = useState<string[]>([]);
+export default function CreateProject({ tags }: CreateProjectProps) {
+  const router = useRouter();
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [previewImage, setPreviewImage] = useState<string>();
 
   const schema = yup.object({
@@ -46,13 +55,6 @@ export default function CreateProject() {
     resolver: yupResolver(schema),
   });
 
-  const options = [
-    'test',
-    'test 2',
-    'test 3',
-    'test 4'
-  ];
-
   const { image } = watch();
 
   useEffect(() => {
@@ -62,7 +64,7 @@ export default function CreateProject() {
   }, [image]);
 
   async function handleCreateProject({ title, demo_url, repository_url, image, description, state }: FormInputData) {
-    if (tags.length === 0) return;
+    if (selectedTags.length === 0) return;
 
     const data = new FormData();
 
@@ -72,9 +74,11 @@ export default function CreateProject() {
     data.append('demo_url', demo_url);
     data.append('repository_url', repository_url);
     data.append('state', state);
-    data.append('tags', JSON.stringify(tags));
+    data.append('tags', JSON.stringify(selectedTags));
 
     await api.post('/projects/create', data);
+
+    router.push('/dashboard');
   }
 
   return (
@@ -137,9 +141,9 @@ export default function CreateProject() {
                 multiple
                 className="border-2 bg-gray-50 px-2"
                 id="tags-standard"
-                options={options}
-                getOptionLabel={option => option}
-                onChange={(_, value) => setTags(value)}
+                options={tags}
+                getOptionLabel={option => option.name}
+                onChange={(_, autoCompleteTags) => setSelectedTags(autoCompleteTags.map(tag => tag.name))}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -172,4 +176,20 @@ export default function CreateProject() {
       </div>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const tags = (await prisma.tag.findMany()).map(tag => {
+    return {
+      ...tag,
+      created_at: tag.created_at.toISOString(),
+      updated_at: tag.updated_at.toISOString(),
+    }
+  });
+
+  return {
+    props: {
+      tags,
+    },
+  }
 }
