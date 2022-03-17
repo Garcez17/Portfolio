@@ -8,6 +8,7 @@ import * as yup from "yup";
 import { DashForm } from "../../components/dashboard/DashForm";
 import { DashboardHeader } from "../../components/dashboard/Header";
 import { api } from '../../services/api';
+import Image from 'next/image';
 
 type FormInputData = {
   image: FileList;
@@ -68,9 +69,17 @@ export default function CreateExperience() {
             <label className="flex flex-col gap-2 text-sm text-gray-700">
               Imagem
               <div
-                className="p-2 cursor-pointer flex items-center justify-center text-gray-900 border-2 h-48 border-gray-200 rounded-sm bg-gray-50"
+                className="flex relative items-center justify-center h-48 p-2 text-gray-900 border-2 border-gray-200 rounded-sm cursor-pointer bg-gray-50"
               >
-                <FiCamera className="text-gray-700 h-14 w-14" />
+                {previewImage ? (
+                  <Image
+                    src={previewImage}
+                    layout="fill"
+                    alt="uploaded image"
+                  />
+                ) : (
+                  <FiCamera className="text-gray-700 h-14 w-14" />
+                )}
               </div>
               <input type="file" className="hidden" {...register('image')} />
             </label>

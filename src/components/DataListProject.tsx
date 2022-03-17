@@ -1,13 +1,23 @@
+import { Experience, Project, ProjectTag, Tag } from "@prisma/client";
 import Image from "next/image";
 import { FiEdit, FiTrash } from "react-icons/fi";
 
-export function DataListItem() {
+type DataListProjectProps = {
+  project: (Project & {
+    image_url: string;
+    tags: (ProjectTag & {
+      tag: Tag;
+    })[]
+  })
+};
+
+export function DataListProject({ project }: DataListProjectProps) {
   return (
     <div className="flex h-20 bg-white rounded-md">
       <div className="relative w-24 h-full">
         <Image
-          src="https://avatars.githubusercontent.com/u/60040026?v=4"
-          alt="project"
+          src={project.image_url}
+          alt={project.title}
           layout="fill"
           className="rounded-l-md"
         />
@@ -15,11 +25,9 @@ export function DataListItem() {
 
       <div className="flex flex-1">
         <div className="flex flex-col justify-end flex-1 p-4">
-          <h2 className="text-gray-900">Phonebook</h2>
+          <h2 className="text-gray-900">{project.title}</h2>
           <div className="flex gap-1">
-            <span className="text-xs text-gray-700">#ReactJS</span>
-            <span className="text-xs text-gray-700">#ReactJS</span>
-            <span className="text-xs text-gray-700">#ReactJS</span>
+            {project.tags.map(({ tag }) => <span key={tag.id} className="text-xs text-gray-700">{tag.name}</span>)}
           </div>
         </div>
 

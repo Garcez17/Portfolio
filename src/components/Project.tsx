@@ -13,7 +13,6 @@ type ProjectProps = {
 }
 
 export function Project({ project }: ProjectProps) {
-  console.log(project);
   return (
     <div className="flex flex-col p-4 bg-white shadow-lg rounded-xl sm:flex-row sm:gap-4">
       <div className="relative w-full h-48 sm:flex-1 sm:h-auto">
