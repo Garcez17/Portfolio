@@ -40,12 +40,9 @@ export default function CreateProject({ tags }: CreateProjectProps) {
 
       return false;
     }),
-    demo_url: yup.string().when('state', {
-      is: (state: string) => state === 'completed',
-      then: yup.string().required(),
-    }),
+    demo_url: yup.string().optional(),
     repository_url: yup.string().when('state', {
-      is: (state: string) => state === 'completed',
+      is: (state: string) => state !== 'unstarted',
       then: yup.string().required(),
     }),
     state: yup.string().required(),
