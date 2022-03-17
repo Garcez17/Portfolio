@@ -8,7 +8,6 @@ type ExperienceProps = {
 }
 
 export function Experience({ experience }: ExperienceProps) {
-  console.log(experience);
   return (
     <div className="flex gap-4">
       <div className="relative w-16 h-16">

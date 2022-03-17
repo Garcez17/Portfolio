@@ -96,7 +96,7 @@ handler.post(async function (req: any, res: NextApiResponse) {
     }
   })
 
-  return res.status(204).json({});
+  return res.json({});
 })
 
 export const config = {

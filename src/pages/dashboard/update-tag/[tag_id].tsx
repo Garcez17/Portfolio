@@ -1,17 +1,24 @@
+import { GetServerSideProps } from "next";
+import { Tag } from "@prisma/client";
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from '@hookform/resolvers/yup';
 
-import { DashForm } from "../../components/dashboard/DashForm";
-import { DashboardHeader } from "../../components/dashboard/Header";
-import { api } from "../../services/api";
+import { DashForm } from "../../../components/dashboard/DashForm";
+import { DashboardHeader } from "../../../components/dashboard/Header";
+import { api } from "../../../services/api";
+import { prisma } from "../../../utils/prisma";
+
+type UpdateTagProps = {
+  tag: Tag;
+}
 
 type FormInputData = {
   name: string;
 }
 
-export default function CreateTag() {
+export default function UpdateTag({ tag }: UpdateTagProps) {
   const router = useRouter();
   const schema = yup.object({
     name: yup.string().required(),
@@ -19,11 +26,14 @@ export default function CreateTag() {
 
   const { register, handleSubmit } = useForm<FormInputData>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      name: tag.name,
+    }
   });
 
-  async function handleCreateTag({ name }: FormInputData) {
+  async function handleUpdateTag({ name }: FormInputData) {
     try {
-      await api.post('/tags/create', { name });
+      await api.post('/tags/update', { name, tag_id: tag.id });
 
       router.push('/dashboard');
     } catch (err) {
@@ -35,7 +45,7 @@ export default function CreateTag() {
     <div className="flex flex-col h-screen">
       <DashboardHeader />
       <div className="flex justify-center flex-1 px-2 py-4 overflow-auto">
-        <form className="w-full sm:w-1/2" onSubmit={handleSubmit(handleCreateTag)}>
+        <form className="w-full sm:w-1/2" onSubmit={handleSubmit(handleUpdateTag)}>
           <DashForm title="Criar Tag">
             <label className="flex flex-col gap-2 text-sm text-gray-700">
               Título
@@ -47,4 +57,24 @@ export default function CreateTag() {
       </div>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (req) => {
+  const tag = (await prisma.tag.findUnique({
+    where: {
+      id: String(req.params!.tag_id),
+    }
+  }))!;
+
+  const serializedTag = {
+    ...tag,
+    created_at: tag.created_at.toISOString(),
+    updated_at: tag.updated_at.toISOString(),
+  }
+
+  return {
+    props: {
+      tag: serializedTag,
+    },
+  }
 }
