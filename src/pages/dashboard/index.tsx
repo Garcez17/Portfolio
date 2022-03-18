@@ -16,9 +16,9 @@ export default function Dahsboard({ projects, experiences, tags }: DashboardProp
     <div className="flex flex-col justify-center md:h-screen">
       <DashboardHeader />
       <section className="flex flex-col flex-1 overflow-auto divide-x divide-y md:flex-row">
-        <DataList type="project" data={projects} />
-        <DataList type="experience" data={experiences} />
-        <DataList type="tag" data={tags} />
+        <DataList type="projects" data={projects} />
+        <DataList type="experiences" data={experiences} />
+        <DataList type="tags" data={tags} />
       </section>
     </div>
   )

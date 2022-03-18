@@ -1,19 +1,19 @@
-import { Experience, Project, Tag } from "@prisma/client"
+import Link from "next/link"
 import { FiPlus } from "react-icons/fi"
+
 import { DataListTag } from "./DataListTag"
 import { DataListProject } from "./DataListProject"
 import { DataListExperience } from "./DataListExperience"
-import Link from "next/link"
 
 type DataListProps = {
   data: any;
-  type: 'experience' | 'project' | 'tag';
+  type: 'experiences' | 'projects' | 'tags';
 }
 
 export function DataList({ type, data }: DataListProps) {
-  const title = type === 'tag'
+  const title = type === 'tags'
     ? 'Tags'
-    : type === 'experience'
+    : type === 'experiences'
       ? 'Experiências e Certificados'
       : 'Projetos'
 
@@ -24,9 +24,9 @@ export function DataList({ type, data }: DataListProps) {
           {title}
         </h2>
         <Link
-          href={type === 'experience'
+          href={type === 'experiences'
             ? '/dashboard/create-experience'
-            : type === 'tag'
+            : type === 'tags'
               ? '/dashboard/create-tag'
               : '/dashboard/create-project'}
         >
@@ -41,9 +41,9 @@ export function DataList({ type, data }: DataListProps) {
             <p className="text-xs text-gray-700">Sem {title.toLowerCase()} cadastrados.</p>
           </div>
         ) : (
-          type === 'tag'
+          type === 'tags'
             ? data.map((data: any) => <DataListTag key={data.id} tag={data} />)
-            : type === 'project'
+            : type === 'projects'
               ? data.map((data: any) => <DataListProject key={data.id} project={data} />)
               : data.map((data: any) => <DataListExperience key={data.id} experience={data} />)
         )}

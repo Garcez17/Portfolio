@@ -5,3 +5,17 @@
 body {
   @apply bg-gray-100;
 }
+
+.react-modal-overlay {
+  background: rgba(196, 196, 196, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+}
