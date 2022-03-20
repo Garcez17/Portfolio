@@ -1,8 +1,23 @@
+import { useRouter } from 'next/router';
 import { FiCamera } from 'react-icons/fi';
+
 import { DashForm } from "../../components/dashboard/DashForm";
 import { DashboardHeader } from "../../components/dashboard/Header";
+import { Loading } from '../../components/Loading';
+
+import { useAuth } from '../../hooks/useAuth';
 
 export default function UpdateProfile() {
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+
+  if (isAuthenticated === 'idle') return <Loading />;
+
+  if (!isAuthenticated) {
+    router.push('/login');
+    return <div />;
+  }
+
   return (
     <div className="flex flex-col h-screen">
       <DashboardHeader />
@@ -12,7 +27,7 @@ export default function UpdateProfile() {
             <label className="flex flex-col gap-2 text-sm text-gray-700">
               Avatar
               <div
-                className="p-2 cursor-pointer flex items-center justify-center text-gray-900 border-2 h-48 border-gray-200 rounded-full bg-gray-50"
+                className="flex items-center justify-center h-48 p-2 text-gray-900 border-2 border-gray-200 rounded-full cursor-pointer bg-gray-50"
               >
                 <FiCamera className="text-gray-700 h-14 w-14" />
               </div>
@@ -24,7 +39,7 @@ export default function UpdateProfile() {
             </label>
             <label className="flex flex-col gap-2 text-sm text-gray-700">
               Título
-              <textarea className="p-2 text-gray-900 border-2 h-40 border-gray-200 rounded-sm resize-none bg-gray-50" />
+              <textarea className="h-40 p-2 text-gray-900 border-2 border-gray-200 rounded-sm resize-none bg-gray-50" />
             </label>
             <label className="flex flex-col gap-2 text-sm text-gray-700">
               Email
@@ -42,7 +57,7 @@ export default function UpdateProfile() {
               Github
               <input type="text" className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50" />
             </label>
-            <button className="p-2 bg-blue-500 text-white rounded transition-all hover:brightness-95">Confirmar</button>
+            <button className="p-2 text-white transition-all bg-blue-500 rounded hover:brightness-95">Confirmar</button>
           </DashForm>
         </form>
       </div>

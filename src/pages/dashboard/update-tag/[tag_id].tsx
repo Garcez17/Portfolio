@@ -9,6 +9,8 @@ import { DashForm } from "../../../components/dashboard/DashForm";
 import { DashboardHeader } from "../../../components/dashboard/Header";
 import { api } from "../../../services/api";
 import { prisma } from "../../../utils/prisma";
+import { useAuth } from "../../../hooks/useAuth";
+import { Loading } from "../../../components/Loading";
 
 type UpdateTagProps = {
   tag: Tag;
@@ -20,6 +22,8 @@ type FormInputData = {
 
 export default function UpdateTag({ tag }: UpdateTagProps) {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
+
   const schema = yup.object({
     name: yup.string().required(),
   }).required();
@@ -39,6 +43,13 @@ export default function UpdateTag({ tag }: UpdateTagProps) {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  if (isAuthenticated === 'idle') return <Loading />;
+
+  if (!isAuthenticated) {
+    router.push('/login');
+    return <div />;
   }
 
   return (

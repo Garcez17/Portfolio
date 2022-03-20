@@ -9,6 +9,8 @@ import { DashForm } from "../../components/dashboard/DashForm";
 import { DashboardHeader } from "../../components/dashboard/Header";
 import { api } from '../../services/api';
 import Image from 'next/image';
+import { useAuth } from '../../hooks/useAuth';
+import { Loading } from '../../components/Loading';
 
 type FormInputData = {
   image: FileList;
@@ -19,6 +21,7 @@ type FormInputData = {
 }
 
 export default function CreateExperience() {
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [previewImage, setPreviewImage] = useState<string>();
 
@@ -60,6 +63,14 @@ export default function CreateExperience() {
     router.push('/dashboard');
   }
 
+
+  if (isAuthenticated === 'idle') return <Loading />;
+
+  if (!isAuthenticated) {
+    router.push('/login');
+    return <div />;
+  }
+
   return (
     <div className="flex flex-col h-screen">
       <DashboardHeader />
@@ -69,7 +80,7 @@ export default function CreateExperience() {
             <label className="flex flex-col gap-2 text-sm text-gray-700">
               Imagem
               <div
-                className="flex relative items-center justify-center h-48 p-2 text-gray-900 border-2 border-gray-200 rounded-sm cursor-pointer bg-gray-50"
+                className="relative flex items-center justify-center h-48 p-2 text-gray-900 border-2 border-gray-200 rounded-sm cursor-pointer bg-gray-50"
               >
                 {previewImage ? (
                   <Image
@@ -94,7 +105,7 @@ export default function CreateExperience() {
             <label className="flex flex-col gap-2 text-sm text-gray-700">
               Descrição
               <textarea
-                className="p-2 text-gray-900 border-2 h-40 border-gray-200 rounded-sm resize-none bg-gray-50"
+                className="h-40 p-2 text-gray-900 border-2 border-gray-200 rounded-sm resize-none bg-gray-50"
                 {...register('description')}
               />
             </label>
@@ -116,7 +127,7 @@ export default function CreateExperience() {
             </label>
             <button
               type="submit"
-              className="p-2 bg-blue-500 text-white rounded transition-all hover:brightness-95"
+              className="p-2 text-white transition-all bg-blue-500 rounded hover:brightness-95"
             >
               Confirmar
             </button>

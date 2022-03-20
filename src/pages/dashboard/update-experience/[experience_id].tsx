@@ -10,8 +10,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { DashForm } from "../../../components/dashboard/DashForm";
 import { DashboardHeader } from "../../../components/dashboard/Header";
+import { Loading } from '../../../components/Loading';
+
 import { api } from '../../../services/api';
 import { prisma } from '../../../utils/prisma';
+import { useAuth } from '../../../hooks/useAuth';
 
 type UpdateExperienceProps = {
   experience: (Experience & {
@@ -29,6 +32,8 @@ type FormInputData = {
 
 export default function UpdateExperience({ experience }: UpdateExperienceProps) {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
+
   const [previewImage, setPreviewImage] = useState<string>(experience.image_url);
 
   const schema = yup.object({
@@ -76,6 +81,13 @@ export default function UpdateExperience({ experience }: UpdateExperienceProps) 
     router.push('/dashboard');
   }
 
+  if (isAuthenticated === 'idle') return <Loading />;
+
+  if (!isAuthenticated) {
+    router.push('/login');
+    return <div />;
+  }
+
   return (
     <div className="flex flex-col h-screen">
       <DashboardHeader />
@@ -85,7 +97,7 @@ export default function UpdateExperience({ experience }: UpdateExperienceProps) 
             <label className="flex flex-col gap-2 text-sm text-gray-700">
               Imagem
               <div
-                className="flex relative items-center justify-center h-48 p-2 text-gray-900 border-2 border-gray-200 rounded-sm cursor-pointer bg-gray-50"
+                className="relative flex items-center justify-center h-48 p-2 text-gray-900 border-2 border-gray-200 rounded-sm cursor-pointer bg-gray-50"
               >
                 {previewImage ? (
                   <Image
@@ -110,7 +122,7 @@ export default function UpdateExperience({ experience }: UpdateExperienceProps) 
             <label className="flex flex-col gap-2 text-sm text-gray-700">
               Descrição
               <textarea
-                className="p-2 text-gray-900 border-2 h-40 border-gray-200 rounded-sm resize-none bg-gray-50"
+                className="h-40 p-2 text-gray-900 border-2 border-gray-200 rounded-sm resize-none bg-gray-50"
                 {...register('description')}
               />
             </label>
@@ -132,7 +144,7 @@ export default function UpdateExperience({ experience }: UpdateExperienceProps) 
             </label>
             <button
               type="submit"
-              className="p-2 bg-blue-500 text-white rounded transition-all hover:brightness-95"
+              className="p-2 text-white transition-all bg-blue-500 rounded hover:brightness-95"
             >
               Confirmar
             </button>

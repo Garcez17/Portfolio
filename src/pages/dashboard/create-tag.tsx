@@ -6,13 +6,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { DashForm } from "../../components/dashboard/DashForm";
 import { DashboardHeader } from "../../components/dashboard/Header";
 import { api } from "../../services/api";
+import { useAuth } from "../../hooks/useAuth";
+import { Loading } from "../../components/Loading";
 
 type FormInputData = {
   name: string;
 }
 
 export default function CreateTag() {
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
+
   const schema = yup.object({
     name: yup.string().required(),
   }).required();
@@ -29,6 +33,13 @@ export default function CreateTag() {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  if (isAuthenticated === 'idle') return <Loading />;
+
+  if (!isAuthenticated) {
+    router.push('/login');
+    return <div />;
   }
 
   return (

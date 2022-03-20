@@ -13,6 +13,8 @@ import { DashboardHeader } from "../../components/dashboard/Header";
 import { api } from '../../services/api';
 import { prisma } from '../../utils/prisma';
 import { useRouter } from 'next/router';
+import { useAuth } from '../../hooks/useAuth';
+import { Loading } from '../../components/Loading';
 
 type CreateProjectProps = {
   tags: Tag[];
@@ -29,6 +31,8 @@ type FormInputData = {
 
 export default function CreateProject({ tags }: CreateProjectProps) {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
+
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [previewImage, setPreviewImage] = useState<string>();
 
@@ -78,6 +82,13 @@ export default function CreateProject({ tags }: CreateProjectProps) {
     router.push('/dashboard');
   }
 
+  if (isAuthenticated === 'idle') return <Loading />;
+
+  if (!isAuthenticated) {
+    router.push('/login');
+    return <div />;
+  }
+
   return (
     <div className="flex flex-col h-screen">
       <DashboardHeader />
@@ -87,7 +98,7 @@ export default function CreateProject({ tags }: CreateProjectProps) {
             <label className="flex flex-col gap-2 text-sm text-gray-700">
               Capa
               <div
-                className="flex relative items-center justify-center h-48 p-2 text-gray-900 border-2 border-gray-200 rounded-sm cursor-pointer bg-gray-50"
+                className="relative flex items-center justify-center h-48 p-2 text-gray-900 border-2 border-gray-200 rounded-sm cursor-pointer bg-gray-50"
               >
                 {previewImage ? (
                   <Image
@@ -136,7 +147,7 @@ export default function CreateProject({ tags }: CreateProjectProps) {
               Tags
               <Autocomplete
                 multiple
-                className="border-2 bg-gray-50 px-2"
+                className="px-2 border-2 bg-gray-50"
                 id="tags-standard"
                 options={tags}
                 getOptionLabel={option => option.name}

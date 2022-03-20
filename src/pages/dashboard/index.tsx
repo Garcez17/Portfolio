@@ -1,8 +1,12 @@
 import { Experience, Project, Tag } from "@prisma/client";
 import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 
 import { DashboardHeader } from "../../components/dashboard/Header";
 import { DataList } from "../../components/DataList";
+import { Loading } from "../../components/Loading";
+
+import { useAuth } from "../../hooks/useAuth";
 import { prisma } from "../../utils/prisma";
 
 type DashboardProps = {
@@ -12,6 +16,16 @@ type DashboardProps = {
 }
 
 export default function Dahsboard({ projects, experiences, tags }: DashboardProps) {
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+
+  if (isAuthenticated === 'idle') return <Loading />;
+
+  if (!isAuthenticated) {
+    router.push('/login');
+    return <div />;
+  }
+
   return (
     <div className="flex flex-col justify-center md:h-screen">
       <DashboardHeader />
