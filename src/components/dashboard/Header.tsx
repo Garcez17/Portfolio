@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { FiArrowLeft, FiLogOut, FiSettings } from "react-icons/fi";
 import { useAuth } from "../../hooks/useAuth";
@@ -23,9 +24,11 @@ export function DashboardHeader() {
         )}
       </div>
       <div className="flex gap-6">
-        <a href="#" className="text-2xl text-gray-800 transition-all hover:brightness-50">
-          <FiSettings />
-        </a>
+        <Link href="/dashboard/update-profile">
+          <a className="text-2xl text-gray-800 transition-all hover:brightness-50">
+            <FiSettings />
+          </a>
+        </Link>
         <button
           type="button"
           className="text-2xl text-gray-800 transition-all hover:brightness-50"

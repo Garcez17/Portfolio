@@ -79,7 +79,6 @@ export default function UpdateProject({ tags, project }: UpdateProjectProps) {
 
   async function handleUpdateProject({ title, demo_url, repository_url, image, description, state }: FormInputData) {
     if (selectedTags.length === 0) return;
-    console.log({ title, demo_url, repository_url, image, description, state, selectedTags });
     const data = new FormData();
 
     data.append('title', title);

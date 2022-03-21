@@ -3,7 +3,9 @@ import { User } from "@prisma/client";
 import { FiGithub, FiMail, FiPhone } from 'react-icons/fi';
 
 type HeaderProps = {
-  user: User;
+  user: (User & {
+    avatar_url: string;
+  });
 }
 
 export function Header({ user }: HeaderProps) {
@@ -11,7 +13,7 @@ export function Header({ user }: HeaderProps) {
     <header className="flex flex-col w-full p-4 bg-white shadow-lg rounded-xl sm:flex-row sm:gap-4 md:h-72">
       <div className="relative w-full h-64 sm:h-full sm:w-72">
         <Image
-          src={user.avatar}
+          src={user.avatar_url}
           layout="fill"
           alt={user.name}
           className="rounded-xl"

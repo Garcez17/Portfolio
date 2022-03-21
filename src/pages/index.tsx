@@ -15,7 +15,9 @@ type SerializedProject = Project & {
 }
 
 type HomeProps = {
-  user: User;
+  user: (User & {
+    avatar_url: string;
+  });
   experiences: (Experience & {
     image_url: string;
   })[];
@@ -52,6 +54,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   const serializedUser = {
     ...user,
+    avatar_url: `https://app-portfolio-gz.s3.amazonaws.com/${user.avatar}`,
     created_at: user.created_at.toISOString(),
     updated_at: user.updated_at.toISOString(),
   }
