@@ -1,8 +1,16 @@
 import { useRouter } from "next/router";
-import { FiArrowLeft, FiSettings } from "react-icons/fi";
+import { FiArrowLeft, FiLogOut, FiSettings } from "react-icons/fi";
+import { useAuth } from "../../hooks/useAuth";
 
 export function DashboardHeader() {
   const router = useRouter();
+  const { signOutUser } = useAuth();
+
+  async function handleSignOut() {
+    await signOutUser();
+
+    router.push('/login');
+  }
 
   return (
     <header className="flex items-center justify-between w-full h-24 px-4 bg-white shadow-sm">
@@ -14,9 +22,18 @@ export function DashboardHeader() {
           </button>
         )}
       </div>
-      <a href="#" className="text-2xl text-gray-800">
-        <FiSettings />
-      </a>
+      <div className="flex gap-6">
+        <a href="#" className="text-2xl text-gray-800 transition-all hover:brightness-50">
+          <FiSettings />
+        </a>
+        <button
+          type="button"
+          className="text-2xl text-gray-800 transition-all hover:brightness-50"
+          onClick={handleSignOut}
+        >
+          <FiLogOut />
+        </button>
+      </div>
     </header>
   )
 }

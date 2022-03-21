@@ -3,18 +3,12 @@ import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 import { auth } from '../services/firebase';
 
-type User = {
-  id: string;
-  email: string;
-}
-
 type SignInCredentials = {
   email: string;
   password: string;
 }
 
 type AuthContextData = {
-  user: User | undefined;
   isAuthenticated: boolean | 'idle';
   signIn: (data: SignInCredentials) => Promise<void>;
   signOutUser: () => Promise<void>;
@@ -27,20 +21,17 @@ type AuthContextProviderProps = {
 }
 
 export function AuthProvider({ children }: AuthContextProviderProps) {
-  const [user, setUser] = useState<User>();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | 'idle'>('idle');
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        const { email, uid } = user;
         setIsAuthenticated(true);
 
-        setUser({
-          id: uid,
-          email: email!,
-        });
+        return;
       }
+
+      setIsAuthenticated(false);
     });
 
     return () => {
@@ -50,13 +41,9 @@ export function AuthProvider({ children }: AuthContextProviderProps) {
 
   async function signIn({ email, password }: SignInCredentials) {
     try {
-      const { user } = await signInWithEmailAndPassword(auth, email, password);
-      const { uid } = user;
+      await signInWithEmailAndPassword(auth, email, password);
 
-      setUser({
-        id: uid,
-        email,
-      });
+      setIsAuthenticated(true);
     } catch (err) {
       console.log(err);
     }
@@ -65,15 +52,15 @@ export function AuthProvider({ children }: AuthContextProviderProps) {
   async function signOutUser() {
     try {
       await signOut(auth);
+
       setIsAuthenticated(false);
-      setUser(undefined);
     } catch (err) {
       console.log(err);
     }
   }
 
   return (
-    <AuthContext.Provider value={{ user, signIn, signOutUser, isAuthenticated }}>
+    <AuthContext.Provider value={{ signIn, signOutUser, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   )
