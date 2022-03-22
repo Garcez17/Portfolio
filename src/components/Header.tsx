@@ -28,15 +28,30 @@ export function Header({ user }: HeaderProps) {
           </div>
 
           <div className="flex flex-col gap-2.5">
-            <a href="#" className="flex items-center gap-2 text-base text-gray-800">
+            <a
+              href="mailto:ggarcez613@gmail.com"
+              className="flex items-center gap-2 text-base text-gray-800"
+              rel="noreferrer"
+              target="_blank"
+            >
               <FiMail />
               {user.email}
             </a>
-            <a href="#" className="flex items-center gap-2 text-base text-gray-800">
+            <a
+              href="https://wa.me/5571981913913"
+              className="flex items-center gap-2 text-base text-gray-800"
+              rel="noreferrer"
+              target="_blank"
+            >
               <FiPhone />
               {user.phone_number}
             </a>
-            <a href="#" className="flex items-center gap-2 text-base text-gray-800">
+            <a
+              href="https://github.com/Garcez17"
+              className="flex items-center gap-2 text-base text-gray-800"
+              rel="noreferrer"
+              target="_blank"
+            >
               <FiGithub />
               {user.github_username}
             </a>
