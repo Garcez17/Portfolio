@@ -34,9 +34,6 @@ export function DataListProject({ project }: DataListProjectProps) {
         <div className="flex flex-1">
           <div className="flex flex-col justify-end px-2 py-4">
             <h2 className="text-gray-900">{project.title}</h2>
-            <div className="flex gap-1">
-              {project.tags.map(({ tag }) => <span key={tag.id} className="text-xs text-gray-700">{tag.name}</span>)}
-            </div>
           </div>
 
           <div className="flex items-center justify-center md:justify-end md:pr-4 w-1/3 gap-0.5 flex-1">
