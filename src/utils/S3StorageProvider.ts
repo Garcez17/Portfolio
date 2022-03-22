@@ -6,6 +6,10 @@ class S3StorageProvider {
 
   constructor() {
     this.client = new aws.S3({
+      credentials: {
+        accessKeyId: String(process.env.AWS_ACCESS_KEY_ID_PORTFOLIO),
+        secretAccessKey: String(process.env.AWS_SECRET_ACCESS_KEY_PORTFOLIO),
+      },
       region: 'us-east-1',
     });
   }
@@ -15,7 +19,7 @@ class S3StorageProvider {
 
     await this.client
       .putObject({
-        Bucket: 'app-portfolio-gz',
+        Bucket: String(process.env.AWS_BUCKET),
         Key: file,
         ACL: 'public-read',
         Body: fileContent,
@@ -30,7 +34,7 @@ class S3StorageProvider {
   public async deleteFile(file: string): Promise<void> {
     await this.client
       .deleteObject({
-        Bucket: 'app-portfolio-gz',
+        Bucket: String(process.env.AWS_BUCKET),
         Key: file,
       })
       .promise();
