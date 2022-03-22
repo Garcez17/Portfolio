@@ -164,7 +164,7 @@ export const getServerSideProps: GetServerSideProps = async (req) => {
 
   const serializedExperience = {
     ...experience,
-    image_url: `https://app-portfolio-gz.s3.amazonaws.com/${experience.image}`,
+    image_url: `${process.env.AWS_S3_URL}/${experience.image}`,
     created_at: experience.created_at.toISOString(),
     updated_at: experience.updated_at.toISOString(),
   }

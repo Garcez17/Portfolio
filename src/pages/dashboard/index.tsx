@@ -64,7 +64,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const serializedExperiences = experiences.map(experience => {
     return {
       ...experience,
-      image_url: `https://app-portfolio-gz.s3.amazonaws.com/${experience.image}`,
+      image_url: `${process.env.AWS_S3_URL}/${experience.image}`,
       created_at: experience.created_at.toISOString(),
       updated_at: experience.updated_at.toISOString(),
     }
@@ -73,7 +73,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const serializedProjects = projects.map(project => {
     return {
       ...project,
-      image_url: `https://app-portfolio-gz.s3.amazonaws.com/${project.image}`,
+      image_url: `${process.env.AWS_S3_URL}/${project.image}`,
       created_at: project.created_at.toISOString(),
       updated_at: project.updated_at.toISOString(),
       tags: project.tags.map(projectTag => ({

@@ -217,7 +217,7 @@ export const getServerSideProps: GetServerSideProps = async (req) => {
 
   const serializedProject = {
     ...project,
-    image_url: `https://app-portfolio-gz.s3.amazonaws.com/${project.image}`,
+    image_url: `${process.env.AWS_S3_URL}/${project.image}`,
     created_at: project.created_at.toISOString(),
     updated_at: project.updated_at.toISOString(),
     tags: project.tags.map(projectTag => ({

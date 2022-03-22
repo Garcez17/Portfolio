@@ -184,7 +184,7 @@ export const getServerSideProps: GetServerSideProps = async (req) => {
 
   const serializedUser = {
     ...user,
-    avatar_url: `https://app-portfolio-gz.s3.amazonaws.com/${user.avatar}`,
+    avatar_url: `${process.env.AWS_S3_URL}/${user.avatar}`,
     created_at: user.created_at.toISOString(),
     updated_at: user.updated_at.toISOString(),
   }
