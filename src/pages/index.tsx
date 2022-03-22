@@ -6,6 +6,7 @@ import { ProjectList } from '../components/ProjectList';
 import { Experiences } from '../components/Experiences';
 
 import { prisma } from '../utils/prisma';
+import { SEO } from '../components/SEO';
 
 type SerializedProject = Project & {
   image_url: string;
@@ -26,16 +27,22 @@ type HomeProps = {
 
 export default function Home({ user, experiences, projects }: HomeProps) {
   return (
-    <div className="flex justify-center w-full h-full">
-      <div className="container flex flex-col items-center gap-6 p-4">
-        <Header user={user} />
+    <>
+      <SEO
+        title="Home"
+        shouldIndexPage
+      />
+      <div className="flex justify-center w-full h-full">
+        <div className="container flex flex-col items-center gap-6 p-4">
+          <Header user={user} />
 
-        <div className="flex flex-col-reverse w-full gap-16 md:flex-row md:gap-4">
-          <Experiences experiences={experiences} />
-          <ProjectList projects={projects} />
+          <div className="flex flex-col-reverse w-full gap-16 md:flex-row md:gap-4">
+            <Experiences experiences={experiences} />
+            <ProjectList projects={projects} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

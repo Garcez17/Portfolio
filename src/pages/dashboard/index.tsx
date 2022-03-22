@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { DashboardHeader } from "../../components/dashboard/Header";
 import { DataList } from "../../components/DataList";
 import { Loading } from "../../components/Loading";
+import { SEO } from "../../components/SEO";
 
 import { useAuth } from "../../hooks/useAuth";
 import { prisma } from "../../utils/prisma";
@@ -27,14 +28,19 @@ export default function Dahsboard({ projects, experiences, tags }: DashboardProp
   }
 
   return (
-    <div className="flex flex-col justify-center md:h-screen">
-      <DashboardHeader />
-      <section className="flex flex-col flex-1 overflow-auto divide-x divide-y md:flex-row">
-        <DataList type="projects" data={projects} />
-        <DataList type="experiences" data={experiences} />
-        <DataList type="tags" data={tags} />
-      </section>
-    </div>
+    <>
+      <SEO
+        title="Dashboard"
+      />
+      <div className="flex flex-col justify-center md:h-screen">
+        <DashboardHeader />
+        <section className="flex flex-col flex-1 overflow-auto divide-x divide-y md:flex-row">
+          <DataList type="projects" data={projects} />
+          <DataList type="experiences" data={experiences} />
+          <DataList type="tags" data={tags} />
+        </section>
+      </div>
+    </>
   )
 }
 

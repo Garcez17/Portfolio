@@ -32,7 +32,7 @@ export function DataListProject({ project }: DataListProjectProps) {
         </div>
 
         <div className="flex flex-1">
-          <div className="flex flex-col justify-end px-2 py-4">
+          <div className="flex items-center px-2 py-4">
             <h2 className="text-gray-900">{project.title}</h2>
           </div>
 

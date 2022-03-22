@@ -16,7 +16,7 @@ export function DataListTag({ tag }: DataListTagProps) {
       <DeleteModal type="tags" isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} dataId={tag.id} />
       <div className="flex h-20 bg-white rounded-md">
         <div className="flex flex-1">
-          <div className="flex flex-col justify-center flex-1 p-4">
+          <div className="flex items-center flex-1 p-4">
             <h2 className="text-gray-900">{tag.name}</h2>
           </div>
 

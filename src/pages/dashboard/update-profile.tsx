@@ -11,6 +11,7 @@ import * as yup from "yup";
 import { DashForm } from "../../components/dashboard/DashForm";
 import { DashboardHeader } from "../../components/dashboard/Header";
 import { Loading } from '../../components/Loading';
+import { SEO } from '../../components/SEO';
 
 import { useAuth } from '../../hooks/useAuth';
 import { api } from '../../services/api';
@@ -101,81 +102,86 @@ export default function UpdateProfile({ user }: UpdateProfileProps) {
   }
 
   return (
-    <div className="flex flex-col h-screen">
-      <DashboardHeader />
-      <div className="flex justify-center flex-1 px-2 py-4 overflow-auto">
-        <form className="w-full sm:w-1/3" onSubmit={handleSubmit(handleUpdateProfile)}>
-          <DashForm title="Editar perfil">
-            <label className="flex flex-col gap-2 text-sm text-gray-700 items-center">
-              Avatar
-              <div
-                className="flex relative items-center justify-center h-48 w-3/4 sm:w-1/2 p-2 text-gray-900 border-2 border-gray-200 rounded-2xl cursor-pointer bg-gray-50"
-              >
-                {previewImage ? (
-                  <Image
-                    src={previewImage}
-                    layout="fill"
-                    alt="uploaded image"
-                    className="rounded-2xl"
-                  />
-                ) : (
-                  <FiCamera className="text-gray-700 h-14 w-14" />
-                )}
-              </div>
-              <input type="file" className="hidden" {...register('image')} />
-            </label>
-            <label className="flex flex-col gap-2 text-sm text-gray-700">
-              Nome
-              <input
-                type="text"
-                className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50"
-                {...register('name')}
-              />
-            </label>
-            <label className="flex flex-col gap-2 text-sm text-gray-700">
-              Título
-              <input
-                type="text"
-                className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50"
-                {...register('title')}
-              />
-            </label>
-            <label className="flex flex-col gap-2 text-sm text-gray-700">
-              Sobre
-              <textarea
-                className="h-40 p-2 text-gray-900 border-2 border-gray-200 rounded-sm resize-none bg-gray-50"
-                {...register('about')}
-              />
-            </label>
-            <label className="flex flex-col gap-2 text-sm text-gray-700">
-              Email
-              <input
-                type="email"
-                className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50"
-                {...register('email')}
-              />
-            </label>
-            <label className="flex flex-col gap-2 text-sm text-gray-700">
-              Número de celular
-              <input
-                type="text"
-                className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50"
-                {...register('phone_number')}
-              />
-            </label>
-            <label className="flex flex-col gap-2 text-sm text-gray-700">
-              Github
-              <input
-                type="text"
-                className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50"
-                {...register('github_username')}
-              />
-            </label>
-            <button className="p-2 text-white transition-all bg-blue-500 rounded hover:brightness-95">Confirmar</button>
-          </DashForm>
-        </form>
+    <>
+      <SEO
+        title="Editar perfil"
+      />
+      <div className="flex flex-col h-screen">
+        <DashboardHeader />
+        <div className="flex justify-center flex-1 px-2 py-4 overflow-auto">
+          <form className="w-full sm:w-1/3" onSubmit={handleSubmit(handleUpdateProfile)}>
+            <DashForm title="Editar perfil">
+              <label className="flex flex-col gap-2 text-sm text-gray-700 items-center">
+                Avatar
+                <div
+                  className="flex relative items-center justify-center h-48 w-3/4 sm:w-1/2 p-2 text-gray-900 border-2 border-gray-200 rounded-2xl cursor-pointer bg-gray-50"
+                >
+                  {previewImage ? (
+                    <Image
+                      src={previewImage}
+                      layout="fill"
+                      alt="uploaded image"
+                      className="rounded-2xl"
+                    />
+                  ) : (
+                    <FiCamera className="text-gray-700 h-14 w-14" />
+                  )}
+                </div>
+                <input type="file" className="hidden" {...register('image')} />
+              </label>
+              <label className="flex flex-col gap-2 text-sm text-gray-700">
+                Nome
+                <input
+                  type="text"
+                  className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50"
+                  {...register('name')}
+                />
+              </label>
+              <label className="flex flex-col gap-2 text-sm text-gray-700">
+                Título
+                <input
+                  type="text"
+                  className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50"
+                  {...register('title')}
+                />
+              </label>
+              <label className="flex flex-col gap-2 text-sm text-gray-700">
+                Sobre
+                <textarea
+                  className="h-40 p-2 text-gray-900 border-2 border-gray-200 rounded-sm resize-none bg-gray-50"
+                  {...register('about')}
+                />
+              </label>
+              <label className="flex flex-col gap-2 text-sm text-gray-700">
+                Email
+                <input
+                  type="email"
+                  className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50"
+                  {...register('email')}
+                />
+              </label>
+              <label className="flex flex-col gap-2 text-sm text-gray-700">
+                Número de celular
+                <input
+                  type="text"
+                  className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50"
+                  {...register('phone_number')}
+                />
+              </label>
+              <label className="flex flex-col gap-2 text-sm text-gray-700">
+                Github
+                <input
+                  type="text"
+                  className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50"
+                  {...register('github_username')}
+                />
+              </label>
+              <button className="p-2 text-white transition-all bg-blue-500 rounded hover:brightness-95">Confirmar</button>
+            </DashForm>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

@@ -11,6 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { DashForm } from "../../../components/dashboard/DashForm";
 import { DashboardHeader } from "../../../components/dashboard/Header";
 import { Loading } from '../../../components/Loading';
+import { SEO } from '../../../components/SEO';
 
 import { api } from '../../../services/api';
 import { prisma } from '../../../utils/prisma';
@@ -89,69 +90,74 @@ export default function UpdateExperience({ experience }: UpdateExperienceProps) 
   }
 
   return (
-    <div className="flex flex-col h-screen">
-      <DashboardHeader />
-      <div className="flex justify-center flex-1 px-2 py-4 overflow-auto">
-        <form className="w-full sm:w-1/2" onSubmit={handleSubmit(handleUpdateExperience)}>
-          <DashForm title="Criar Experiência">
-            <label className="flex flex-col gap-2 text-sm text-gray-700">
-              Imagem
-              <div
-                className="relative flex items-center justify-center h-48 p-2 text-gray-900 border-2 border-gray-200 rounded-sm cursor-pointer bg-gray-50"
+    <>
+      <SEO
+        title={`Experiência: ${experience.title}`}
+      />
+      <div className="flex flex-col h-screen">
+        <DashboardHeader />
+        <div className="flex justify-center flex-1 px-2 py-4 overflow-auto">
+          <form className="w-full sm:w-1/2" onSubmit={handleSubmit(handleUpdateExperience)}>
+            <DashForm title="Criar Experiência">
+              <label className="flex flex-col gap-2 text-sm text-gray-700">
+                Imagem
+                <div
+                  className="relative flex items-center justify-center h-48 p-2 text-gray-900 border-2 border-gray-200 rounded-sm cursor-pointer bg-gray-50"
+                >
+                  {previewImage ? (
+                    <Image
+                      src={previewImage}
+                      layout="fill"
+                      alt="uploaded image"
+                    />
+                  ) : (
+                    <FiCamera className="text-gray-700 h-14 w-14" />
+                  )}
+                </div>
+                <input type="file" className="hidden" {...register('image')} />
+              </label>
+              <label className="flex flex-col gap-2 text-sm text-gray-700">
+                Título
+                <input
+                  type="text"
+                  className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50"
+                  {...register('title')}
+                />
+              </label>
+              <label className="flex flex-col gap-2 text-sm text-gray-700">
+                Descrição
+                <textarea
+                  className="h-40 p-2 text-gray-900 border-2 border-gray-200 rounded-sm resize-none bg-gray-50"
+                  {...register('description')}
+                />
+              </label>
+              <label className="flex flex-col gap-2 text-sm text-gray-700">
+                Inicío
+                <input
+                  type="text"
+                  className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50"
+                  {...register('start')}
+                />
+              </label>
+              <label className="flex flex-col gap-2 text-sm text-gray-700">
+                Fim
+                <input
+                  type="text"
+                  className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50"
+                  {...register('end')}
+                />
+              </label>
+              <button
+                type="submit"
+                className="p-2 text-white transition-all bg-blue-500 rounded hover:brightness-95"
               >
-                {previewImage ? (
-                  <Image
-                    src={previewImage}
-                    layout="fill"
-                    alt="uploaded image"
-                  />
-                ) : (
-                  <FiCamera className="text-gray-700 h-14 w-14" />
-                )}
-              </div>
-              <input type="file" className="hidden" {...register('image')} />
-            </label>
-            <label className="flex flex-col gap-2 text-sm text-gray-700">
-              Título
-              <input
-                type="text"
-                className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50"
-                {...register('title')}
-              />
-            </label>
-            <label className="flex flex-col gap-2 text-sm text-gray-700">
-              Descrição
-              <textarea
-                className="h-40 p-2 text-gray-900 border-2 border-gray-200 rounded-sm resize-none bg-gray-50"
-                {...register('description')}
-              />
-            </label>
-            <label className="flex flex-col gap-2 text-sm text-gray-700">
-              Inicío
-              <input
-                type="text"
-                className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50"
-                {...register('start')}
-              />
-            </label>
-            <label className="flex flex-col gap-2 text-sm text-gray-700">
-              Fim
-              <input
-                type="text"
-                className="p-2 text-gray-900 border-2 border-gray-200 rounded-sm bg-gray-50"
-                {...register('end')}
-              />
-            </label>
-            <button
-              type="submit"
-              className="p-2 text-white transition-all bg-blue-500 rounded hover:brightness-95"
-            >
-              Confirmar
-            </button>
-          </DashForm>
-        </form>
+                Confirmar
+              </button>
+            </DashForm>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
