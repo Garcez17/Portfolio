@@ -40,11 +40,11 @@ Aplicação serverless, feita em ReactJS com NextJS, utilizando prismaORM com ba
 
 ## Próximas features
 
-- [] Dark Theme.
+- [ ] Dark Theme.
 
-- [] Tela de mais detalhes dos projetos.
+- [ ] Tela de mais detalhes dos projetos.
 
-- [] Filtro na listagem de projetos por tecnologia.
+- [ ] Filtro na listagem de projetos por tecnologia.
 
 ## Feito com:
 - [ReactJS](https://github.com/facebook/react) - Biblioteca Javascript para construção de interfaces.
